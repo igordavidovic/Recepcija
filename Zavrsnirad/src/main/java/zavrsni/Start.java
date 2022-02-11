@@ -4,10 +4,14 @@
  */
 package zavrsni;
 
+import zavrsni.util.HibernateUtil;
+
 /**
  *
  * @author Igor
  */
 public class Start {
-    
+    public static void main(String[] args) {
+        HibernateUtil.getSession();
+    }
 }
