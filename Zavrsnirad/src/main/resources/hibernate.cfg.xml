@@ -6,7 +6,7 @@
             Izvorno s https://dzone.com/articles/hibernate-5-xml-configuration-example
             -->
             
-            <!--
+            
         
 <hibernate-configuration>
     <session-factory>
@@ -41,7 +41,7 @@
         <property name="hibernate.dbcp.maxWaitMillis">-1</property>
         
         <mapping class="zavrsni.model.Djelatnik" />
-        
+        <mapping class="zavrsni.model.Korisnik" />
         
     </session-factory>
 </hibernate-configuration>
