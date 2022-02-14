@@ -23,7 +23,7 @@ public class Posjeta {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer sifra;
     @ManyToOne
-    @JoinColumn(name = "sifra")
+    @JoinColumn(name = "korisnik",referencedColumnName = "sifra")
     private Korisnik korisnik;
     @Column(name = "datumprijave")
     private Date datumPrijave;

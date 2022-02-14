@@ -23,7 +23,7 @@ public class Usluga {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer sifra;
     @ManyToOne
-    @JoinColumn(name = "sifra")
+    @JoinColumn(name = "djelatnik",referencedColumnName = "sifra")
     private Djelatnik djelatnik;
     @Column(columnDefinition = "varchar(100)")
     private String naziv;
