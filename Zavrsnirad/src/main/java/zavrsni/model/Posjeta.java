@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -20,18 +22,21 @@ public class Posjeta {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer sifra;
+    @ManyToOne
+    @JoinColumn(name = "sifra")
     private Korisnik korisnik;
     @Column(name = "datumprijave")
     private Date datumPrijave;
     @Column(name = "datumodjave")
     private Date datumOdjave;
     @Column(name = "brojsoba")
-    private Integer brojSoba;
+    private int brojSoba;
     @Column(name = "brojodraslih")
-    private Integer brojOdraslih;
+    private int brojOdraslih;
     @Column(name = "brojdjece")
-    private Integer brojDjece;
-
+    private int brojDjece;
+    
+    
     public Integer getSifra() {
         return sifra;
     }

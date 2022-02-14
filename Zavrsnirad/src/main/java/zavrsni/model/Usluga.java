@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -19,7 +21,9 @@ import javax.persistence.Id;
 public class Usluga {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int sifra;
+    private Integer sifra;
+    @ManyToOne
+    @JoinColumn(name = "sifra")
     private Djelatnik djelatnik;
     @Column(columnDefinition = "varchar(100)")
     private String naziv;
