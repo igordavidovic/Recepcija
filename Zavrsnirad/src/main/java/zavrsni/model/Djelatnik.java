@@ -5,7 +5,10 @@
 package zavrsni.model;
 
 import java.math.BigDecimal;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
@@ -15,11 +18,17 @@ import javax.persistence.Id;
 @Entity
 public class Djelatnik {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int sifra;
+    @Column(columnDefinition = "varchar(50)")
     private String ime;
+    @Column(columnDefinition = "varchar(50)")
     private String prezime;
+    @Column(columnDefinition = "varchar(50)",nullable = true)
     private String uloga;
+    @Column(columnDefinition = "varchar(50)", nullable = true)
     private String email;
+    @Column(columnDefinition = "decimal(18,2)", nullable = true)
     private BigDecimal placa;
 
     public int getSifra() {
