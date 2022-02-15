@@ -17,9 +17,9 @@ import javax.persistence.Id;
  */
 @Entity
 public class Djelatnik extends Entitet{
-    @Column(columnDefinition = "varchar(50)")
+    @Column(columnDefinition = "varchar(50)",nullable = false)
     private String ime;
-    @Column(columnDefinition = "varchar(50)")
+    @Column(columnDefinition = "varchar(50)", nullable = false)
     private String prezime;
     @Column(columnDefinition = "varchar(50)",nullable = true)
     private String uloga;

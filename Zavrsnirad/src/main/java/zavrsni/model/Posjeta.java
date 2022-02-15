@@ -23,17 +23,17 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Posjeta extends Entitet{
     @ManyToOne
-    @JoinColumn(name = "korisnik",referencedColumnName = "sifra")
+    @JoinColumn(name = "korisnik",referencedColumnName = "sifra",nullable = false)
     private Korisnik korisnik;
     @Column(name = "datumprijave")
     private Date datumPrijave;
     @Column(name = "datumodjave")
     private Date datumOdjave;
-    @Column(name = "brojsoba")
+    @Column(name = "brojsoba",nullable = false)
     private int brojSoba;
-    @Column(name = "brojodraslih")
+    @Column(name = "brojodraslih",nullable = false)
     private int brojOdraslih;
-    @Column(name = "brojdjece")
+    @Column(name = "brojdjece",nullable = false)
     private int brojDjece;
     @ManyToMany
     @JoinTable(name = "posjeta_usluga",

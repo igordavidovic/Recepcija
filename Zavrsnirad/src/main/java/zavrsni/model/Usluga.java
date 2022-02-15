@@ -20,9 +20,9 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Usluga extends Entitet{
     @ManyToOne
-    @JoinColumn(name = "djelatnik",referencedColumnName = "sifra")
+    @JoinColumn(name = "djelatnik",referencedColumnName = "sifra",nullable = false)
     private Djelatnik djelatnik;
-    @Column(columnDefinition = "varchar(100)")
+    @Column(columnDefinition = "varchar(100)",nullable = false)
     private String naziv;
     @Column(columnDefinition = "decimal(18,2)",nullable = true)
     private BigDecimal cijena;
