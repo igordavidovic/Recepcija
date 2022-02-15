@@ -16,10 +16,7 @@ import javax.persistence.Id;
  * @author Igor
  */
 @Entity
-public class Korisnik {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer sifra;
+public class Korisnik extends Entitet{
     @Column(columnDefinition = "varchar(50)")
     private String ime;
     @Column(columnDefinition = "varchar(50)")
@@ -30,14 +27,6 @@ public class Korisnik {
     private String oib;
     @Column(name = "datumrodenja",nullable = true)
     private Date datumRodenja;
-
-    public Integer getSifra() {
-        return sifra;
-    }
-
-    public void setSifra(Integer sifra) {
-        this.sifra = sifra;
-    }
 
     public String getIme() {
         return ime;

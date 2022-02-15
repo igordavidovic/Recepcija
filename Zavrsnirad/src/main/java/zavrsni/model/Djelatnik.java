@@ -16,10 +16,7 @@ import javax.persistence.Id;
  * @author Igor
  */
 @Entity
-public class Djelatnik {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int sifra;
+public class Djelatnik extends Entitet{
     @Column(columnDefinition = "varchar(50)")
     private String ime;
     @Column(columnDefinition = "varchar(50)")
@@ -30,14 +27,6 @@ public class Djelatnik {
     private String email;
     @Column(columnDefinition = "decimal(18,2)", nullable = true)
     private BigDecimal placa;
-
-    public int getSifra() {
-        return sifra;
-    }
-
-    public void setSifra(int sifra) {
-        this.sifra = sifra;
-    }
 
     public String getIme() {
         return ime;

@@ -18,10 +18,7 @@ import javax.persistence.ManyToOne;
  * @author Igor
  */
 @Entity
-public class Posjeta {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer sifra;
+public class Posjeta extends Entitet{
     @ManyToOne
     @JoinColumn(name = "korisnik",referencedColumnName = "sifra")
     private Korisnik korisnik;
@@ -35,17 +32,7 @@ public class Posjeta {
     private int brojOdraslih;
     @Column(name = "brojdjece")
     private int brojDjece;
-    
-    
-    public Integer getSifra() {
-        return sifra;
-    }
-
-    public void setSifra(Integer sifra) {
-        this.sifra = sifra;
-    }
-    
-    
+        
     public Korisnik getKorisnik() {
         return korisnik;
     }
