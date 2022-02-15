@@ -5,12 +5,15 @@
 package zavrsni.model;
 
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 /**
@@ -32,6 +35,43 @@ public class Posjeta extends Entitet{
     private int brojOdraslih;
     @Column(name = "brojdjece")
     private int brojDjece;
+    @ManyToMany
+    @JoinTable(name = "posjeta_usluga",
+            joinColumns = {@JoinColumn(name = "posjeta")},
+    inverseJoinColumns = {@JoinColumn(name = "usluga")})
+    private List<Usluga> usluge;
+
+    public int getBrojSoba() {
+        return brojSoba;
+    }
+
+    public void setBrojSoba(int brojSoba) {
+        this.brojSoba = brojSoba;
+    }
+
+    public int getBrojOdraslih() {
+        return brojOdraslih;
+    }
+
+    public void setBrojOdraslih(int brojOdraslih) {
+        this.brojOdraslih = brojOdraslih;
+    }
+
+    public int getBrojDjece() {
+        return brojDjece;
+    }
+
+    public void setBrojDjece(int brojDjece) {
+        this.brojDjece = brojDjece;
+    }
+
+    public List<Usluga> getUsluge() {
+        return usluge;
+    }
+
+    public void setUsluge(List<Usluga> usluge) {
+        this.usluge = usluge;
+    }
         
     public Korisnik getKorisnik() {
         return korisnik;
@@ -57,28 +97,5 @@ public class Posjeta extends Entitet{
         this.datumOdjave = datumOdjave;
     }
 
-    public Integer getBrojSoba() {
-        return brojSoba;
-    }
 
-    public void setBrojSoba(Integer brojSoba) {
-        this.brojSoba = brojSoba;
-    }
-
-    public Integer getBrojOdraslih() {
-        return brojOdraslih;
-    }
-
-    public void setBrojOdraslih(Integer brojOdraslih) {
-        this.brojOdraslih = brojOdraslih;
-    }
-
-    public Integer getBrojDjece() {
-        return brojDjece;
-    }
-
-    public void setBrojDjece(Integer brojDjece) {
-        this.brojDjece = brojDjece;
-    }
-    
 }

@@ -44,7 +44,6 @@
         <mapping class="zavrsni.model.Korisnik" />
         <mapping class ="zavrsni.model.Usluga"/>
         <mapping class ="zavrsni.model.Posjeta"/>
-        <mapping class ="zavrsni.model.PosjetaUsluga"/>
         
         
         
