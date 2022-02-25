@@ -5,6 +5,7 @@
 package zavrsni.controller;
 
 import java.util.List;
+import org.apache.commons.validator.routines.EmailValidator;
 import zavrsni.model.Korisnik;
 import zavrsni.util.OibProvjera;
 import zavrsni.util.ZavrsniException;
@@ -26,6 +27,7 @@ public class ObradaKorisnik extends Obrada<Korisnik> {
         kontrolaIme();
         kontrolaPrezime();
         kontrolaOib();
+        kontrolaEmail();
     }
 
     @Override
@@ -33,6 +35,7 @@ public class ObradaKorisnik extends Obrada<Korisnik> {
         kontrolaIme();
         kontrolaPrezime();
         kontrolaOib();
+        kontrolaEmail();
     }
 
     @Override
@@ -67,11 +70,18 @@ public class ObradaKorisnik extends Obrada<Korisnik> {
 
     }
 
-    private void kontrolaOib() throws ZavrsniException{
-    boolean b = OibProvjera.provjera(entitet.getOib());
-    if(b == false){
-        throw new ZavrsniException("OIB nije formalno ispravan");
+    private void kontrolaOib() throws ZavrsniException {
+        boolean b = OibProvjera.provjera(entitet.getOib());
+        if (b == false) {
+            throw new ZavrsniException("OIB nije formalno ispravan");
+        }
+
     }
-    
+
+    private void kontrolaEmail() throws ZavrsniException {
+        boolean b = EmailValidator.getInstance().isValid(entitet.getEmail());
+        if (b == false) {
+            throw new ZavrsniException("Email nije formalno ispravan");
+        }
     }
 }
