@@ -6,6 +6,7 @@ package zavrsni.controller;
 
 import java.util.List;
 import zavrsni.model.Korisnik;
+import zavrsni.util.OibProvjera;
 import zavrsni.util.ZavrsniException;
 import zavrsni.util.ZavrsniUtil;
 
@@ -24,12 +25,14 @@ public class ObradaKorisnik extends Obrada<Korisnik> {
     protected void kontrolaCreate() throws ZavrsniException {
         kontrolaIme();
         kontrolaPrezime();
+        kontrolaOib();
     }
 
     @Override
     protected void kontrolaUpdate() throws ZavrsniException {
         kontrolaIme();
         kontrolaPrezime();
+        kontrolaOib();
     }
 
     @Override
@@ -62,5 +65,13 @@ public class ObradaKorisnik extends Obrada<Korisnik> {
             throw new ZavrsniException("Prezime ne smije sadržavati brojeve ili posebne znakove(#,$,%,& etc.)");
         }
 
+    }
+
+    private void kontrolaOib() throws ZavrsniException{
+    boolean b = OibProvjera.provjera(entitet.getOib());
+    if(b == false){
+        throw new ZavrsniException("OIB nije formalno ispravan");
+    }
+    
     }
 }
