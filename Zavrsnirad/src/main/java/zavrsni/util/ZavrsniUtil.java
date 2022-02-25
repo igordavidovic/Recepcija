@@ -23,4 +23,15 @@ public class ZavrsniUtil {
         return true;
     }
     
+    
+    public static boolean provjeraUloge(String s){
+        String[] niz = {"RECEPCIONAR","POMOĆNI RECEPCIONAR","NOĆNI RECEPCIONAR","ŠEF RECEPCIJE","ZAMJENIK ŠEFA RECEPCIJE","PORTIR","BELL BOY"};
+        for(String a : niz){
+            if(s.toUpperCase().equals(a)){
+                return true;
+            }
+        }
+        
+        return false;
+    }
 }
