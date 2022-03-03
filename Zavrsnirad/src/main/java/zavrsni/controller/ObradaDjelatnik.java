@@ -4,7 +4,10 @@
  */
 package zavrsni.controller;
 
+import de.mkammerer.argon2.Argon2;
+import de.mkammerer.argon2.Argon2Factory;
 import java.util.List;
+import javax.persistence.NoResultException;
 import org.apache.commons.validator.routines.EmailValidator;
 import zavrsni.model.Djelatnik;
 import zavrsni.util.ZavrsniException;
@@ -76,10 +79,26 @@ public class ObradaDjelatnik extends Obrada<Djelatnik> {
         }
     }
 
-    private void kontrolaEmail() throws ZavrsniException{
+    private void kontrolaEmail() throws ZavrsniException {
         boolean b = EmailValidator.getInstance().isValid(entitet.getEmail());
-        if(b == false){
+        if (b == false) {
             throw new ZavrsniException("Email nije formalno ispravan");
         }
+    }
+
+    public Djelatnik autoriziraj(String email, String lozinka) {
+        Djelatnik djelatnik = null;
+        try {
+            djelatnik = (Djelatnik) session.createQuery("from Djelatnik where email=:email").setParameter("email", email).getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+        if (djelatnik == null) {
+            return null;
+        }
+        
+        Argon2 argon2 = Argon2Factory.create();
+        
+        return argon2.verify(djelatnik.getLozinka(), lozinka.toCharArray()) ? djelatnik : null;
     }
 }

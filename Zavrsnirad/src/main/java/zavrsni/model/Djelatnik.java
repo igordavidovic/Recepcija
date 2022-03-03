@@ -27,7 +27,17 @@ public class Djelatnik extends Entitet{
     private String email;
     @Column(columnDefinition = "decimal(18,2)", nullable = true)
     private BigDecimal placa;
+    @Column(nullable = false)
+    private String lozinka;
 
+    public String getLozinka() {
+        return lozinka;
+    }
+
+    public void setLozinka(String lozinka) {
+        this.lozinka = lozinka;
+    }
+    
     public String getIme() {
         return ime;
     }
