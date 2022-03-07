@@ -30,38 +30,38 @@ public class Posjeta extends Entitet{
     @Column(name = "datumodjave")
     private Date datumOdjave;
     @Column(name = "brojsoba",nullable = false)
-    private int brojSoba;
+    private Integer brojSoba;
     @Column(name = "brojodraslih",nullable = false)
-    private int brojOdraslih;
+    private Integer brojOdraslih;
     @Column(name = "brojdjece",nullable = false)
-    private int brojDjece;
+    private Integer brojDjece;
     @ManyToMany
     @JoinTable(name = "posjeta_usluga",
             joinColumns = {@JoinColumn(name = "posjeta")},
     inverseJoinColumns = {@JoinColumn(name = "usluga")})
     private List<Usluga> usluge;
 
-    public int getBrojSoba() {
+    public Integer getBrojSoba() {
         return brojSoba;
     }
 
-    public void setBrojSoba(int brojSoba) {
+    public void setBrojSoba(Integer brojSoba) {
         this.brojSoba = brojSoba;
     }
 
-    public int getBrojOdraslih() {
+    public Integer getBrojOdraslih() {
         return brojOdraslih;
     }
 
-    public void setBrojOdraslih(int brojOdraslih) {
+    public void setBrojOdraslih(Integer brojOdraslih) {
         this.brojOdraslih = brojOdraslih;
     }
 
-    public int getBrojDjece() {
+    public Integer getBrojDjece() {
         return brojDjece;
     }
 
-    public void setBrojDjece(int brojDjece) {
+    public void setBrojDjece(Integer brojDjece) {
         this.brojDjece = brojDjece;
     }
 
