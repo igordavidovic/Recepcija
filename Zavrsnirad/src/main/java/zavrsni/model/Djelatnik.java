@@ -5,11 +5,13 @@
 package zavrsni.model;
 
 import java.math.BigDecimal;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -29,7 +31,16 @@ public class Djelatnik extends Entitet{
     private BigDecimal placa;
     @Column(nullable = false)
     private String lozinka;
+    @OneToMany(mappedBy = "djelatnik")
+    private List<Usluga> usluge;
 
+    public List<Usluga> getUsluge() {
+        return usluge;
+    }
+
+    public void setUsluge(List<Usluga> usluge) {
+        this.usluge = usluge;
+    }
     public String getLozinka() {
         return lozinka;
     }
@@ -76,6 +87,11 @@ public class Djelatnik extends Entitet{
 
     public void setPlaca(BigDecimal placa) {
         this.placa = placa;
+    }
+
+    @Override
+    public String toString() {
+        return new StringBuilder().append(ime).append(" ").append(prezime).toString();
     }
     
     

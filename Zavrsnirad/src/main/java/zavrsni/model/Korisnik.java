@@ -5,11 +5,13 @@
 package zavrsni.model;
 
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -27,7 +29,16 @@ public class Korisnik extends Entitet{
     private String oib;
     @Column(name = "datumrodenja",nullable = true)
     private Date datumRodenja;
+    @OneToMany(mappedBy = "korisnik")
+    private List<Posjeta> posjete;
 
+    public List<Posjeta> getPosjete() {
+        return posjete;
+    }
+
+    public void setPosjete(List<Posjeta> posjete) {
+        this.posjete = posjete;
+    }
     public String getIme() {
         return ime;
     }
@@ -67,4 +78,10 @@ public class Korisnik extends Entitet{
     public void setDatumRodenja(Date datumRodenja) {
         this.datumRodenja = datumRodenja;
     }
+
+    @Override
+    public String toString() {
+        return new StringBuilder().append(ime).append(" ").append(prezime).toString();
+    }
+    
 }
