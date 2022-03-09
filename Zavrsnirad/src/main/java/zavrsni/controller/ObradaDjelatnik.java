@@ -10,6 +10,7 @@ import java.util.List;
 import javax.persistence.NoResultException;
 import org.apache.commons.validator.routines.EmailValidator;
 import zavrsni.model.Djelatnik;
+import zavrsni.model.Usluga;
 import zavrsni.util.ZavrsniException;
 import zavrsni.util.ZavrsniUtil;
 
@@ -30,6 +31,7 @@ public class ObradaDjelatnik extends Obrada<Djelatnik> {
         kontrolaPrezime();
         kontrolaUloga();
         kontrolaEmail();
+        kontrolaLozinka();
     }
 
     @Override
@@ -38,10 +40,20 @@ public class ObradaDjelatnik extends Obrada<Djelatnik> {
         kontrolaPrezime();
         kontrolaUloga();
         kontrolaEmail();
+        kontrolaLozinka();
     }
 
     @Override
     protected void kontrolaDelete() throws ZavrsniException {
+        if(entitet.getUsluge() != null && entitet.getUsluge().size() > 0){
+             StringBuilder sb = new StringBuilder();
+            sb.append("\n");
+            for(Usluga u : entitet.getUsluge()){
+                sb.append(u.getNaziv());
+                sb.append("\n");
+            }
+            throw new ZavrsniException("Ne možete brisati djelatnika jer se on nalazi na usluzi");
+        }
     }
 
     private void kontrolaIme() throws ZavrsniException {
@@ -85,7 +97,13 @@ public class ObradaDjelatnik extends Obrada<Djelatnik> {
             throw new ZavrsniException("Email nije formalno ispravan");
         }
     }
-
+    private void kontrolaLozinka() throws ZavrsniException{
+        if(entitet.getLozinka().length() > 50){
+            throw new ZavrsniException("Lozinka ne smije biti duža od 50 znakova");
+        }
+        Argon2 argon2 = Argon2Factory.create();
+        entitet.setLozinka(argon2.hash(10, 65536, 1,entitet.getLozinka().toCharArray()));
+    }
     public Djelatnik autoriziraj(String email, String lozinka) {
         Djelatnik djelatnik = null;
         try {
