@@ -7,6 +7,7 @@ package zavrsni.controller;
 import java.util.List;
 import org.apache.commons.validator.routines.EmailValidator;
 import zavrsni.model.Korisnik;
+import zavrsni.model.Posjeta;
 import zavrsni.util.OibProvjera;
 import zavrsni.util.ZavrsniException;
 import zavrsni.util.ZavrsniUtil;
@@ -40,6 +41,18 @@ public class ObradaKorisnik extends Obrada<Korisnik> {
 
     @Override
     protected void kontrolaDelete() throws ZavrsniException {
+        if(entitet.getPosjete() != null && entitet.getPosjete().size() > 0){
+            StringBuilder sb = new StringBuilder();
+            sb.append("\n");
+            for(Posjeta p : entitet.getPosjete()){
+                sb.append(p.getKorisnik().getIme());
+                sb.append(" ");
+                sb.append(p.getKorisnik().getPrezime());
+                sb.append("\n");
+            }
+            
+            throw new ZavrsniException("Ne možete brisati korisnika jer se on nalazi na posjeti");
+        }
     }
 
     private void kontrolaIme() throws ZavrsniException {

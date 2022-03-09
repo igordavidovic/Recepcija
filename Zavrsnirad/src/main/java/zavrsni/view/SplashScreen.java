@@ -68,6 +68,7 @@ public class SplashScreen extends javax.swing.JFrame {
                 run();
             } catch (InterruptedException ex) {
             }
+            dispose();
         }
         
     }
