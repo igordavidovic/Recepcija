@@ -36,7 +36,7 @@ public class ZavrsniUtil {
     }
 
     public static boolean provjeraUloge(String s) {
-        String[] niz = {"RECEPCIONAR", "POMOĆNIRECEPCIONAR", "NOĆNIRECEPCIONAR", "ŠEFRECEPCIJE", "ZAMJENIKŠEFARECEPCIJE", "PORTIR", "BELLBOY"};
+        String[] niz = {"RECEPCIONAR", "POMOĆNI RECEPCIONAR", "NOĆNI RECEPCIONAR", "ŠEF RECEPCIJE", "ZAMJENIK ŠEFA RECEPCIJE", "PORTIR"};
         for (String a : niz) {
             if (s.trim().toUpperCase().equals(a)) {
                 return true;
