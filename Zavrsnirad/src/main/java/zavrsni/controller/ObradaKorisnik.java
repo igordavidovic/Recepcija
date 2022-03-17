@@ -23,6 +23,33 @@ public class ObradaKorisnik extends Obrada<Korisnik> {
         return session.createQuery("from Korisnik").list();
     }
 
+    public List<Korisnik> readIme(String uvjet) {
+        return session.createQuery("from Korisnik k "
+                + " where k.ime "
+                + " like :uvjet order by k.ime")
+                .setParameter("uvjet", "%" + uvjet + "%")
+                .setMaxResults(100)
+                .list();
+    }
+
+    public List<Korisnik> readPrezime(String uvjet) {
+        return session.createQuery("from Korisnik k "
+                + " where k.prezime "
+                + " like :uvjet order by k.prezime")
+                .setParameter("uvjet", "%" + uvjet + "%")
+                .setMaxResults(100)
+                .list();
+    }
+
+    public List<Korisnik> readOib(String uvjet) {
+        return session.createQuery("from Korisnik k "
+                + " where k.oib "
+                + " like :uvjet order by k.oib")
+                .setParameter("uvjet", "%" + uvjet + "%")
+                .setMaxResults(100)
+                .list();
+    }
+
     @Override
     protected void kontrolaCreate() throws ZavrsniException {
         kontrolaIme();
@@ -41,16 +68,16 @@ public class ObradaKorisnik extends Obrada<Korisnik> {
 
     @Override
     protected void kontrolaDelete() throws ZavrsniException {
-        if(entitet.getPosjete() != null && entitet.getPosjete().size() > 0){
+        if (entitet.getPosjete() != null && entitet.getPosjete().size() > 0) {
             StringBuilder sb = new StringBuilder();
             sb.append("\n");
-            for(Posjeta p : entitet.getPosjete()){
+            for (Posjeta p : entitet.getPosjete()) {
                 sb.append(p.getKorisnik().getIme());
                 sb.append(" ");
                 sb.append(p.getKorisnik().getPrezime());
                 sb.append("\n");
             }
-            
+
             throw new ZavrsniException("Ne možete brisati korisnika jer se on nalazi na posjeti");
         }
     }
