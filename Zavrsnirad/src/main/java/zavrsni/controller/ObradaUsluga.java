@@ -36,12 +36,19 @@ public class ObradaUsluga extends Obrada<Usluga> {
 
     @Override
     protected void kontrolaDelete() throws ZavrsniException {
+        
     }
 
     private void kontrolaDjelatnik() throws ZavrsniException {
+        if(entitet.getDjelatnik() == null || entitet.getDjelatnik().getSifra().equals(0)){
+            throw new ZavrsniException("Obavezan odabir djelatnika");
+        }
     }
 
     private void kontrolaNaziv() throws ZavrsniException {
+        if(entitet.getNaziv() == null || entitet.getNaziv().trim().length() > 50){
+            throw new ZavrsniException("Naziv mora biti upisan i kraći od 50 znakova");
+        }
     }
 
     private void kontrolaCijena() throws ZavrsniException {
