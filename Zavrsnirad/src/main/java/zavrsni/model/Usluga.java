@@ -61,6 +61,11 @@ public class Usluga extends Entitet{
     public void setCijena(BigDecimal cijena) {
         this.cijena = cijena;
     }
+
+    @Override
+    public String toString() {
+        return naziv;
+    }
     
     
 }

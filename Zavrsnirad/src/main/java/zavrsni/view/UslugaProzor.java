@@ -39,7 +39,6 @@ public class UslugaProzor extends javax.swing.JFrame {
         DecimalFormatSymbols symbols = new DecimalFormatSymbols(new Locale("hr","HR"));
         df = new DecimalFormat("###,###.00",symbols);
         ucitaj();
-        ucitajDjelatnike();
     }
 
     /**
@@ -60,12 +59,9 @@ public class UslugaProzor extends javax.swing.JFrame {
         txtNaziv = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txtCijena = new javax.swing.JTextField();
-        cmbDjelatnici = new javax.swing.JComboBox<>();
-        jLabel2 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        lstPosjete = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(420, 320));
 
         lstUsluge.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
@@ -101,15 +97,6 @@ public class UslugaProzor extends javax.swing.JFrame {
 
         txtCijena.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
-        jLabel2.setText("Djelatnik");
-
-        lstPosjete.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                lstPosjeteValueChanged(evt);
-            }
-        });
-        jScrollPane3.setViewportView(lstPosjete);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -117,36 +104,36 @@ public class UslugaProzor extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(txtNaziv, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtCijena, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(cmbDjelatnici, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(42, 42, 42)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnObrisi)
-                                    .addComponent(btnKreiraj)
-                                    .addComponent(btnPromjeni))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtCijena, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtNaziv)
+                                .addContainerGap())
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(btnKreiraj, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                                .addComponent(btnPromjeni)
+                                .addGap(20, 20, 20))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(67, 67, 67)
+                        .addComponent(btnObrisi, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -155,33 +142,21 @@ public class UslugaProzor extends javax.swing.JFrame {
                         .addComponent(jLabel4)
                         .addGap(4, 4, 4)
                         .addComponent(txtCijena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmbDjelatnici, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
-                        .addComponent(btnKreiraj)
+                        .addGap(30, 30, 30)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnKreiraj)
+                            .addComponent(btnPromjeni))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnPromjeni)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnObrisi))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addComponent(btnObrisi)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-    private void ucitajDjelatnike(){
-        DefaultComboBoxModel<Djelatnik> ms = new DefaultComboBoxModel<>();
-        Djelatnik djelatnik = new Djelatnik();
-        djelatnik.setSifra(0);
-        djelatnik.setIme("Nije");
-        djelatnik.setPrezime("odabrano");
-        ms.addElement(djelatnik);
-        new ObradaDjelatnik().read().forEach(d -> {ms.addElement(d);});
-        cmbDjelatnici.setModel(ms);
-    }
+
     private void lstUslugeValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstUslugeValueChanged
        if (evt.getValueIsAdjusting() || lstUsluge.getSelectedValue() == null) {
             return;
@@ -190,11 +165,6 @@ public class UslugaProzor extends javax.swing.JFrame {
         var k = ou.getEntitet();
         txtNaziv.setText(k.getNaziv());
         txtCijena.setText(k.getCijena() != null ? df.format(k.getCijena()) : "");
-        if(k.getDjelatnik() == null){
-            cmbDjelatnici.setSelectedIndex(0);
-        }else{
-            cmbDjelatnici.setSelectedItem(k.getDjelatnik());
-        }
     }//GEN-LAST:event_lstUslugeValueChanged
 
     private void btnKreirajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKreirajActionPerformed
@@ -242,10 +212,6 @@ public class UslugaProzor extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnObrisiActionPerformed
 
-    private void lstPosjeteValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstPosjeteValueChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lstPosjeteValueChanged
-
     /**
      * @param args the command line arguments
      */
@@ -254,13 +220,9 @@ public class UslugaProzor extends javax.swing.JFrame {
     private javax.swing.JButton btnKreiraj;
     private javax.swing.JButton btnObrisi;
     private javax.swing.JButton btnPromjeni;
-    private javax.swing.JComboBox<Djelatnik> cmbDjelatnici;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JList<Posjeta> lstPosjete;
     private javax.swing.JList<Usluga> lstUsluge;
     private javax.swing.JTextField txtCijena;
     private javax.swing.JTextField txtNaziv;
@@ -282,6 +244,5 @@ public class UslugaProzor extends javax.swing.JFrame {
         } catch (Exception e) {
             s.setCijena(BigDecimal.ZERO);
         }
-        
     }
 }
