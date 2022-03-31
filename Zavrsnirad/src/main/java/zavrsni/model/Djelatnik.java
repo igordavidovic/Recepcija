@@ -31,16 +31,7 @@ public class Djelatnik extends Entitet{
     private BigDecimal placa;
     @Column(nullable = false)
     private String lozinka;
-    @OneToMany(mappedBy = "djelatnik")
-    private List<Usluga> usluge;
 
-    public List<Usluga> getUsluge() {
-        return usluge;
-    }
-
-    public void setUsluge(List<Usluga> usluge) {
-        this.usluge = usluge;
-    }
     public String getLozinka() {
         return lozinka;
     }

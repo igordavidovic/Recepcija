@@ -22,14 +22,12 @@ public class ObradaUsluga extends Obrada<Usluga> {
 
     @Override
     protected void kontrolaCreate() throws ZavrsniException {
-        kontrolaDjelatnik();
         kontrolaNaziv();
         kontrolaCijena();
     }
 
     @Override
     protected void kontrolaUpdate() throws ZavrsniException {
-        kontrolaDjelatnik();
         kontrolaNaziv();
         kontrolaCijena();
     }
@@ -39,11 +37,6 @@ public class ObradaUsluga extends Obrada<Usluga> {
         
     }
 
-    private void kontrolaDjelatnik() throws ZavrsniException {
-        if(entitet.getDjelatnik() == null || entitet.getDjelatnik().getSifra().equals(0)){
-            throw new ZavrsniException("Obavezan odabir djelatnika");
-        }
-    }
 
     private void kontrolaNaziv() throws ZavrsniException {
         if(entitet.getNaziv() == null || entitet.getNaziv().trim().length() > 50){

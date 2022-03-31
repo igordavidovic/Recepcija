@@ -45,15 +45,7 @@ public class ObradaDjelatnik extends Obrada<Djelatnik> {
 
     @Override
     protected void kontrolaDelete() throws ZavrsniException {
-        if(entitet.getUsluge() != null && entitet.getUsluge().size() > 0){
-             StringBuilder sb = new StringBuilder();
-            sb.append("\n");
-            for(Usluga u : entitet.getUsluge()){
-                sb.append(u.getNaziv());
-                sb.append("\n");
-            }
-            throw new ZavrsniException("Ne možete brisati djelatnika jer se on nalazi na usluzi");
-        }
+
     }
 
     private void kontrolaIme() throws ZavrsniException {
