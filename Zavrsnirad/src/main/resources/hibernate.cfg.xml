@@ -6,7 +6,9 @@
             Izvorno s https://dzone.com/articles/hibernate-5-xml-configuration-example
             -->
             
-            
+            <!--
+            create database recepcijahib character set utf8mb4 COLLATE utf8mb4_croatian_ci;
+-->
         
 <hibernate-configuration>
     <session-factory>

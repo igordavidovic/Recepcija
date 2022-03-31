@@ -4,12 +4,7 @@
  */
 package zavrsni.util;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -29,8 +24,5 @@ public class Test {
         //testOib();
         Date date = ZavrsniUtil.generirajRandomDatum("01.01.1970", "31.12.2021");
         System.out.println(date.toString());
-        for(int i = 0;i < 1000;i++){
-            System.out.println((int)(Math.random() * (4 - 1) + 1));
-        }
     }
 }

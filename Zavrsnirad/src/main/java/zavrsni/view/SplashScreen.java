@@ -6,7 +6,9 @@ package zavrsni.view;
 
 import javax.swing.JOptionPane;
 import org.hibernate.Session;
+import zavrsni.controller.ObradaDjelatnik;
 import zavrsni.util.HibernateUtil;
+import zavrsni.util.PocetniUnos;
 
 /**
  *
@@ -37,6 +39,9 @@ public class SplashScreen extends javax.swing.JFrame {
         public void run() {
             Session s = HibernateUtil.getSession();
             if(!s.getMetamodel().getEntities().isEmpty()){
+                if(new ObradaDjelatnik().read().isEmpty()){
+                    PocetniUnos.pocetniUnos();
+                }
                 b = true;
                 for(int i = a;i < 100;i++){
                     try {
