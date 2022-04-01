@@ -13,7 +13,9 @@ import zavrsni.util.ZavrsniUtil;
  * @author Igor
  */
 public class Izbornik extends javax.swing.JFrame {
+
     private SimpleDateFormat df;
+
     /**
      * Creates new form Izbornik
      */
@@ -22,20 +24,23 @@ public class Izbornik extends javax.swing.JFrame {
         postavke();
     }
     
-    private void postavke(){
+    private void postavke() {
         setTitle(ZavrsniUtil.getNaslov("Izbornik"));
         jmAplikacija.setText(ZavrsniUtil.APP_NASLOV);
         df = new SimpleDateFormat("dd. MMMM. yyy. HH:mm:ss");
+        if (!ZavrsniUtil.djelatnik.getUloga().toUpperCase().equals("ŠEF RECEPCIJE")) {
+            jmiDjelatnik.setVisible(false);
+        }
         Vrijeme v = new Vrijeme();
         v.start();
     }
     
-    private class Vrijeme extends Thread{
-
+    private class Vrijeme extends Thread {
+        
         @Override
         public void run() {
             jLabel1.setText(df.format(new Date()));
-          
+            
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException ex) {
@@ -44,6 +49,7 @@ public class Izbornik extends javax.swing.JFrame {
         }
         
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -59,7 +65,7 @@ public class Izbornik extends javax.swing.JFrame {
         jmAplikacija = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        jmiDjelatnik = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
@@ -85,13 +91,13 @@ public class Izbornik extends javax.swing.JFrame {
 
         jMenu2.setText("Programi");
 
-        jMenuItem1.setText("Djelatnik");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        jmiDjelatnik.setText("Djelatnik");
+        jmiDjelatnik.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                jmiDjelatnikActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem1);
+        jMenu2.add(jmiDjelatnik);
 
         jMenuItem2.setText("Korisnik");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
@@ -102,6 +108,11 @@ public class Izbornik extends javax.swing.JFrame {
         jMenu2.add(jMenuItem2);
 
         jMenuItem3.setText("Posjeta");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem3);
 
         jMenuItem4.setText("Usluga");
@@ -137,9 +148,9 @@ public class Izbornik extends javax.swing.JFrame {
         new KorisnikProzor().setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void jmiDjelatnikActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiDjelatnikActionPerformed
         new DjelatnikProzor().setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_jmiDjelatnikActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         new UslugaProzor().setVisible(true);
@@ -150,21 +161,24 @@ public class Izbornik extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        new PosjetaProzor().setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JMenu jmAplikacija;
+    private javax.swing.JMenuItem jmiDjelatnik;
     // End of variables declaration//GEN-END:variables
 }

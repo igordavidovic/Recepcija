@@ -40,7 +40,6 @@ public class ObradaDjelatnik extends Obrada<Djelatnik> {
         kontrolaPrezime();
         kontrolaUloga();
         kontrolaEmail();
-        kontrolaLozinka();
     }
 
     @Override
@@ -90,8 +89,8 @@ public class ObradaDjelatnik extends Obrada<Djelatnik> {
         }
     }
     private void kontrolaLozinka() throws ZavrsniException{
-        if(entitet.getLozinka().length() > 50){
-            throw new ZavrsniException("Lozinka ne smije biti duža od 50 znakova");
+        if(entitet.getLozinka().length() > 25 ){
+            throw new ZavrsniException("Lozinka ne smije biti duža od 25 znakova");
         }
         Argon2 argon2 = Argon2Factory.create();
         entitet.setLozinka(argon2.hash(10, 65536, 1,entitet.getLozinka().toCharArray()));

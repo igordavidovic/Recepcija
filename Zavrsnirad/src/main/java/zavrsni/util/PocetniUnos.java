@@ -38,9 +38,17 @@ public class PocetniUnos {
 
     private static void unosDjelatnika(Faker faker,Session session,Argon2 argon2) {
         Djelatnik d;
+        d = new Djelatnik();
+        d.setIme("Igor");
+        d.setPrezime("Davidović");
+        d.setEmail("idavidovic@gmail.com");
+        d.setPlaca(new BigDecimal(12000));
+        d.setUloga("Šef recepcije");
+        d.setLozinka(argon2.hash(10, 65536, 1, "id".toCharArray()));
+        session.save(d);
         String[] domene = {"gmail.com", "hotmail.com", "mail.com", "outlook.com", "yahoo.com"};
-        String[] uloge = {"Recepcionar", "Recepcionar", "Pomoćni recepcionar", "Portir", "Noćni recepcionar", "Šef recepcije"};
-        String[] sifre = {"a","bb","ccc","dddd","eeeee","ffffff"};
+        String[] uloge = {"Recepcionar", "Recepcionar", "Pomoćni recepcionar", "Portir", "Noćni recepcionar"};
+        String[] sifre = {"a","bb","ccc","dddd","eeeee"};
         for (int i = 0; i < uloge.length; i++) {
             d = new Djelatnik();
             d.setIme(faker.name().firstName());
