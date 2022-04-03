@@ -4,7 +4,11 @@
  */
 package zavrsni.util;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,11 +22,24 @@ public class Test {
         System.out.println(b);
     }
 
-
+    private static void testDatum() {
+        Date datum = new Date();
+        SimpleDateFormat stariFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+        SimpleDateFormat noviFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+        Date datum2;
+        try {
+            datum2 = stariFormat.parse(datum.toString());
+            String formatiran = noviFormat.format(datum2);
+            System.out.println(formatiran);
+        } catch (ParseException ex) {
+        }
+        System.out.println(datum.toString());
+    }
 
     public static void main(String[] args) {
         //testOib();
-        Date date = ZavrsniUtil.generirajRandomDatum("01.01.1970", "31.12.2021");
-        System.out.println(date.toString());
+        //Date date = ZavrsniUtil.generirajRandomDatum("01.01.1970", "31.12.2021");
+        //System.out.println(date.toString());
+        testDatum();
     }
 }
