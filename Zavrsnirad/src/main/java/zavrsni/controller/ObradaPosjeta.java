@@ -40,6 +40,9 @@ public class ObradaPosjeta extends Obrada<Posjeta> {
     }
 
     private void kontrolaKorisnik() throws ZavrsniException {
+        if(entitet.getKorisnik() == null || entitet.getKorisnik().getSifra() == 0){
+            throw new ZavrsniException("Korisnik mora biti postavljen na posjeti");
+        }
     }
 
     private void kontrolaBrojSoba() throws ZavrsniException {

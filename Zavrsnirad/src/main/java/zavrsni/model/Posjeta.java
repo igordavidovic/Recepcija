@@ -97,5 +97,10 @@ public class Posjeta extends Entitet{
         this.datumOdjave = datumOdjave;
     }
 
+    /*@Override
+    public String toString() {
+        return new StringBuilder().append(datumPrijave).append(" - ").append(datumOdjave).toString();
+    }*/
 
+    
 }

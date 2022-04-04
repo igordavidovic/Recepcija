@@ -34,7 +34,9 @@ public class ObradaUsluga extends Obrada<Usluga> {
 
     @Override
     protected void kontrolaDelete() throws ZavrsniException {
-        
+     if(entitet.getPosjete() != null && entitet.getPosjete().size() > 0){
+         throw new ZavrsniException("Usluga se ne može brisati jer se nalazi na jednoj ili više posjeta!");
+     }   
     }
 
 

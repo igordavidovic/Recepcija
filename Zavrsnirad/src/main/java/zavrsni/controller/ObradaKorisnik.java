@@ -23,6 +23,15 @@ public class ObradaKorisnik extends Obrada<Korisnik> {
         return session.createQuery("from Korisnik").list();
     }
 
+    public List<Korisnik> read(String uvjet) {
+        return session.createQuery("from Korisnik k "
+                + " where concat(k.ime,' ',k.prezime,' ',ifnull(k.oib,'')) "
+                + " like :uvjet order by k.prezime, k.ime")
+                .setParameter("uvjet", "%" + uvjet + "%")
+                .setMaxResults(100)
+                .list();
+    }
+
     public List<Korisnik> readIme(String uvjet) {
         return session.createQuery("from Korisnik k "
                 + " where k.ime "
