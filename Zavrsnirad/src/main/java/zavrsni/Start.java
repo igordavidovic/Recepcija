@@ -4,12 +4,7 @@
  */
 package zavrsni;
 
-import de.mkammerer.argon2.Argon2;
-import de.mkammerer.argon2.Argon2Factory;
-import java.math.BigDecimal;
 import org.hibernate.Session;
-import zavrsni.model.Djelatnik;
-import zavrsni.util.HibernateUtil;
 import zavrsni.view.SplashScreen;
 
 /**
@@ -19,7 +14,6 @@ import zavrsni.view.SplashScreen;
 public class Start {
 
     private Session s;
-    private Argon2 argon2;
 
     public Start() {
         new SplashScreen().setVisible(true);

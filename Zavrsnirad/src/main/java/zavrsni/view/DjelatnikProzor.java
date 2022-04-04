@@ -70,7 +70,7 @@ public class DjelatnikProzor extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         txtUloga = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lstDjelatnici.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {

@@ -5,14 +5,12 @@
 package zavrsni.view;
 
 import com.github.lgooddatepicker.components.DatePickerSettings;
+
 import java.awt.event.KeyEvent;
-import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import zavrsni.controller.ObradaKorisnik;

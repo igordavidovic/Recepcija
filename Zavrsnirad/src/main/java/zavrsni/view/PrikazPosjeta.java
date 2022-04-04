@@ -25,15 +25,15 @@ public class PrikazPosjeta extends JLabel implements ListCellRenderer<Posjeta> {
 
     private SimpleDateFormat stariFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    private SimpleDateFormat noviFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+    private SimpleDateFormat noviFormat = new SimpleDateFormat("dd.MM.yyyy");
 
     private SimpleDateFormat defaultFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
 
     private DefaultListCellRenderer defaultRenderer = new DefaultListCellRenderer();
 
-    private Date datumPrijave = new Date();
+    private Date datumPrijave;
 
-    private Date datumOdjave = new Date();
+    private Date datumOdjave;
 
     @Override
     public Component getListCellRendererComponent(JList<? extends Posjeta> list, Posjeta value, int index, boolean isSelected, boolean cellHasFocus) {
@@ -41,19 +41,27 @@ public class PrikazPosjeta extends JLabel implements ListCellRenderer<Posjeta> {
                 isSelected, cellHasFocus);
         String a, b;
         try {
-            if (GenericValidator.isDate(value.getDatumPrijave().toString(), "EEE MMM dd HH:mm:ss zzz yyyy", true) || GenericValidator.isDate(value.getDatumOdjave().toString(), "EEE MMM dd HH:mm:ss zzz yyyy", true)) {
-                datumPrijave = defaultFormat.parse(value.getDatumPrijave().toString());
-                datumOdjave = defaultFormat.parse(value.getDatumOdjave().toString());
-            } else {
+            //if (GenericValidator.isDate(value.getDatumPrijave().toString(), "EEE MMM dd HH:mm:ss zzz yyyy", true) && GenericValidator.isDate(value.getDatumOdjave().toString(), "EEE MMM dd HH:mm:ss zzz yyyy", true)) {
+            datumPrijave = defaultFormat.parse(value.getDatumPrijave().toString());
+            datumOdjave = defaultFormat.parse(value.getDatumOdjave().toString());
+            // } else {
+        } catch (ParseException ex) {
+            try {
                 datumPrijave = stariFormat.parse(value.getDatumPrijave().toString());
                 datumOdjave = stariFormat.parse(value.getDatumOdjave().toString());
+            } catch (ParseException ex1) {
+               // System.out.println(ex.getMessage());
+
             }
-            a = noviFormat.format(datumPrijave);
-            b = noviFormat.format(datumOdjave);
-            renderer.setText(a + " - " + b);
-        } catch (ParseException ex) {
-            System.out.println(ex.getMessage());
+            //System.out.println(ex.getMessage());
+
         }
+
+        // }
+        a = noviFormat.format(datumPrijave);
+        b = noviFormat.format(datumOdjave);
+        renderer.setText(a + " - " + b);
+
         return renderer;
     }
 

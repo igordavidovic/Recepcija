@@ -65,7 +65,7 @@ public class PocetniUnos {
         List<Korisnik> korisnici = new ArrayList<>();
         Korisnik k;
         String[] domene = {"gmail.com", "hotmail.com", "mail.com", "outlook.com", "yahoo.com"};
-        for (int i = 0; i < 2500; i++) {
+        for (int i = 0; i < 1000; i++) {
             k = new Korisnik();
             k.setIme(faker.name().firstName());
             k.setPrezime(faker.name().lastName());
@@ -81,9 +81,9 @@ public class PocetniUnos {
 
     private static void unosPosjeta(List<Korisnik> korisnici,List<Usluga> usluge,Faker faker,Session session) {
         Posjeta p;
-        for(int i = 0;i < 6000;i++){
+        for(int i = 0;i < 2000;i++){
             p = new Posjeta();
-            p.setKorisnik(korisnici.get((int)(Math.random() * 2500)));
+            p.setKorisnik(korisnici.get((int)(Math.random() * 1000)));
             p.setDatumPrijave(ZavrsniUtil.generirajRandomDatum("01.01.2019", "30.03.2022"));
             while(true){
             p.setDatumOdjave(ZavrsniUtil.generirajRandomDatum("01.01.2019", "31.03.2022"));
