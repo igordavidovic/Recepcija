@@ -2,11 +2,11 @@
         "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
         
-        <!--
-            Izvorno s https://dzone.com/articles/hibernate-5-xml-configuration-example
-            -->
+<!--
+Izvorno s https://dzone.com/articles/hibernate-5-xml-configuration-example
+-->
             
-            <!--
+<!--
             create database recepcijahib character set utf8mb4 COLLATE utf8mb4_croatian_ci;
 -->
         
@@ -42,10 +42,10 @@
         <property name="hibernate.dbcp.minIdle">5</property>
         <property name="hibernate.dbcp.maxWaitMillis">-1</property>
         
-        <mapping class="zavrsni.model.Djelatnik" />
-        <mapping class="zavrsni.model.Korisnik" />
-        <mapping class ="zavrsni.model.Usluga"/>
-        <mapping class ="zavrsni.model.Posjeta"/>
+        <mapping class="recepcija.model.Djelatnik" />
+        <mapping class="recepcija.model.Korisnik" />
+        <mapping class ="recepcija.model.Usluga"/>
+        <mapping class ="recepcija.model.Posjeta"/>
         
         
         
