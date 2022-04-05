@@ -6,6 +6,8 @@ package zavrsni.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.concurrent.ThreadLocalRandom;
 import zavrsni.model.Djelatnik;
@@ -58,6 +60,7 @@ public class ZavrsniUtil {
     public static Date generirajRandomDatum(String beginDate, String endDate) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
         Date d1,d2,randomDate;
+        LocalDate localDate;
         try {
             d1 = sdf.parse(beginDate);
             d2 = sdf.parse(endDate);
@@ -66,6 +69,8 @@ public class ZavrsniUtil {
         } catch (ParseException ex) {
             return null;
         }
+        localDate = randomDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        randomDate = Date.from(localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
         return randomDate;
     }
 
