@@ -351,8 +351,16 @@ public class PosjetaProzor extends javax.swing.JFrame {
         }
         op.setEntitet(lstPosjete.getSelectedValue());
         var p = op.getEntitet();
-        dpDatumPrijave.setDate(p.getDatumPrijave().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-        dpDatumOdjave.setDate(p.getDatumOdjave().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        if (p.getDatumPrijave() != null) {
+            dpDatumPrijave.setDate(p.getDatumPrijave().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        } else {
+            dpDatumPrijave.setDate(null);
+        }
+        if (p.getDatumOdjave() != null) {
+            dpDatumOdjave.setDate(p.getDatumOdjave().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        } else {
+            dpDatumOdjave.setDate(null);
+        }
         txtBrojSoba.setText(p.getBrojSoba().toString());
         txtBrojOdraslih.setText(p.getBrojOdraslih().toString());
         txtBrojDjece.setText(p.getBrojDjece().toString());
