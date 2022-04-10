@@ -6,7 +6,11 @@ package recepcija.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.ZoneId;
 import java.util.Date;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,10 +40,27 @@ public class Test {
         System.out.println(datum.toString());
     }
 
+    private static Date datumIzmedu(LocalDate a, LocalDate b) {
+        long startEpochDay = a.toEpochDay();
+        long endEpochDay = b.toEpochDay();
+        long randomDay = ThreadLocalRandom
+                .current()
+                .nextLong(startEpochDay, endEpochDay);
+        LocalDate date = LocalDate.ofEpochDay(randomDay);
+        return Date.from(date.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+    }
+
     public static void main(String[] args) {
         //testOib();
         //Date date = ZavrsniUtil.generirajRandomDatum("01.01.1970", "31.12.2021");
         //System.out.println(date.toString());
-        testDatum();
+        //testDatum();
+        LocalDate start = LocalDate.of(1989, Month.OCTOBER, 14);
+        LocalDate end = LocalDate.now();
+        Date date;
+        for(int i = 0;i < 100;i++){
+            date = datumIzmedu(start,end);
+            System.out.println(date.toString());
+        }
     }
 }

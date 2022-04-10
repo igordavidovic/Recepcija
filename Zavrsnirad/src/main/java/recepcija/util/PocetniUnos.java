@@ -8,6 +8,9 @@ import com.github.javafaker.Faker;
 import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Session;
@@ -23,16 +26,20 @@ import recepcija.model.Usluga;
 public class PocetniUnos {
 
 
-
+    
     public static void pocetniUnos() {
         Session session = HibernateUtil.getSession();
         session.beginTransaction();
+        LocalDate datumRodenjaPocetak = LocalDate.of(1970, Month.JANUARY, 1);
+        LocalDate datumRodenjaKraj = LocalDate.of(2020, Month.DECEMBER, 31);
+        LocalDate datumPrijavePocetak = LocalDate.of(2019, Month.JANUARY, 1);
+        LocalDate datumPrijaveKraj = LocalDate.now();
         Faker faker = new Faker();
         Argon2 argon2 = Argon2Factory.create();
         unosDjelatnika(faker,session,argon2);
-        List<Korisnik> korisnici = unosKorisnika(faker,session);
+        List<Korisnik> korisnici = unosKorisnika(faker,session,datumRodenjaPocetak,datumRodenjaKraj);
         List<Usluga> usluge = unosUsluga(faker,session);
-        unosPosjeta(korisnici,usluge,faker,session);
+        unosPosjeta(korisnici,usluge,faker,session,datumPrijavePocetak,datumPrijaveKraj);
         session.getTransaction().commit();
     }
 
@@ -54,24 +61,24 @@ public class PocetniUnos {
             d.setIme(faker.name().firstName());
             d.setPrezime(faker.name().lastName());
             d.setUloga(uloge[i]);
-            d.setPlaca(new BigDecimal(Math.random() * (12000 - 6000) + 6000));
-            d.setEmail(new StringBuilder().append(d.getIme().toLowerCase()).append(d.getPrezime().substring(0, 1).toLowerCase()).append("@").append(domene[(int) (Math.random() * 5)]).toString());
+            d.setPlaca(new BigDecimal(ZavrsniUtil.randomBroj(6000,12000)));
+            d.setEmail(new StringBuilder().append(d.getIme().toLowerCase()).append(d.getPrezime().substring(0, 1).toLowerCase()).append("@").append(domene[ZavrsniUtil.randomBroj(5, 0)]).toString());
             d.setLozinka(argon2.hash(10, 65536, 1, sifre[i].toCharArray()));
             session.save(d);
         }
     }
 
-    private static List<Korisnik> unosKorisnika(Faker faker,Session session) {
+    private static List<Korisnik> unosKorisnika(Faker faker,Session session,LocalDate pocetak,LocalDate kraj) {
         List<Korisnik> korisnici = new ArrayList<>();
         Korisnik k;
         String[] domene = {"gmail.com", "hotmail.com", "mail.com", "outlook.com", "yahoo.com"};
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 1200; i++) {
             k = new Korisnik();
             k.setIme(faker.name().firstName());
             k.setPrezime(faker.name().lastName());
-            k.setEmail(new StringBuilder().append(k.getIme().toLowerCase()).append(k.getPrezime().substring(0, 1).toLowerCase()).append("@").append(domene[(int) (Math.random() * 5)]).toString());
+            k.setEmail(new StringBuilder().append(k.getIme().toLowerCase()).append(k.getPrezime().substring(0, 1).toLowerCase()).append("@").append(domene[ZavrsniUtil.randomBroj(0,5)]).toString());
             k.setOib(ZavrsniUtil.oibGeneriraj());
-            k.setDatumRodenja(ZavrsniUtil.generirajRandomDatum("01.01.1970", "31.12.2021"));
+            k.setDatumRodenja(ZavrsniUtil.generirajDatum(pocetak, kraj));
             korisnici.add(k);
             session.save(k);
         }
@@ -79,24 +86,21 @@ public class PocetniUnos {
         return korisnici;
     }
 
-    private static void unosPosjeta(List<Korisnik> korisnici,List<Usluga> usluge,Faker faker,Session session) {
+    private static void unosPosjeta(List<Korisnik> korisnici,List<Usluga> usluge,Faker faker,Session session,LocalDate pocetak,LocalDate kraj) {
         Posjeta p;
-        for(int i = 0;i < 2000;i++){
+        LocalDate datum;
+        for(int i = 0;i < 2500;i++){
             p = new Posjeta();
-            p.setKorisnik(korisnici.get((int)(Math.random() * 1000)));
-            p.setDatumPrijave(ZavrsniUtil.generirajRandomDatum("01.01.2019", "30.03.2022"));
-            while(true){
-            p.setDatumOdjave(ZavrsniUtil.generirajRandomDatum("01.01.2019", "31.03.2022"));
-            if(p.getDatumOdjave().after(p.getDatumPrijave())){
-                break;
-            }
-            }
-            p.setBrojSoba((int)(Math.random() * (4 - 1) + 1));
-            p.setBrojOdraslih((int)(Math.random() * ((p.getBrojSoba() + 2) - p.getBrojSoba()) + p.getBrojSoba()));
-            p.setBrojDjece((int)(Math.random() * 3));
+            p.setKorisnik(korisnici.get(ZavrsniUtil.randomBroj(0,1200)));
+            p.setDatumPrijave(ZavrsniUtil.generirajDatum(pocetak, kraj));
+            datum = p.getDatumPrijave().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            p.setDatumOdjave(ZavrsniUtil.generirajDatum(datum.plusDays(1), datum.plusDays(ZavrsniUtil.randomBroj(2, 14))));
+            p.setBrojSoba(ZavrsniUtil.randomBroj(1, 4));
+            p.setBrojOdraslih(ZavrsniUtil.randomBroj(p.getBrojSoba() + 2,p.getBrojSoba()));
+            p.setBrojDjece(ZavrsniUtil.randomBroj(0, 3));
             p.setUsluge(new ArrayList());
             for(int j = 0;j < p.getBrojSoba();j++){
-            p.getUsluge().add(usluge.get(j));
+            p.getUsluge().add(usluge.get(ZavrsniUtil.randomBroj(0,6)));
             }
             session.save(p); 
         }

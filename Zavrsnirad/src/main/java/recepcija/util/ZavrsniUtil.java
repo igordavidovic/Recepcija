@@ -57,21 +57,14 @@ public class ZavrsniUtil {
         return false;
     }
 
-    public static Date generirajRandomDatum(String beginDate, String endDate) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-        Date d1,d2,randomDate;
-        LocalDate localDate;
-        try {
-            d1 = sdf.parse(beginDate);
-            d2 = sdf.parse(endDate);
-            randomDate = new Date(ThreadLocalRandom.current()
-                    .nextLong(d1.getTime(), d2.getTime()));
-        } catch (ParseException ex) {
-            return null;
-        }
-        localDate = randomDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        randomDate = Date.from(localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
-        return randomDate;
+    public static Date generirajDatum(LocalDate pocetak, LocalDate kraj) {
+        long startEpochDay = pocetak.toEpochDay();
+        long endEpochDay = kraj.toEpochDay();
+        long randomDay = ThreadLocalRandom
+                .current()
+                .nextLong(startEpochDay, endEpochDay);
+        LocalDate date = LocalDate.ofEpochDay(randomDay);
+        return Date.from(date.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
     }
 
     public static String oibGeneriraj() {
@@ -102,5 +95,9 @@ public class ZavrsniUtil {
         }
         sb.append(niz[10]);
         return sb.toString();
+    }
+
+    public static int randomBroj(int min, int max) {
+        return (int) (Math.random() * (max - min) + min);
     }
 }
