@@ -4,29 +4,18 @@
  */
 package recepcija.view;
 
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import org.apache.commons.collections.comparators.ComparatorChain;
-import recepcija.controller.ObradaDjelatnik;
 import recepcija.controller.ObradaKorisnik;
 import recepcija.controller.ObradaPosjeta;
 import recepcija.controller.ObradaUsluga;
-import recepcija.model.Djelatnik;
 import recepcija.model.Korisnik;
 import recepcija.model.Usluga;
 import recepcija.model.Posjeta;
@@ -43,20 +32,6 @@ public class PosjetaProzor extends javax.swing.JFrame {
     private ObradaKorisnik ok;
     private Date datum;
     private SimpleDateFormat sdf;
-    private Comparator<Posjeta> compDatumPrijave = new Comparator<Posjeta>() {
-        @Override
-        public int compare(Posjeta o1, Posjeta o2) {
-            return o2.getDatumPrijave().compareTo(o1.getDatumPrijave());
-        }
-    };
-    ;
-    private Comparator<Posjeta> compDatumOdjave = new Comparator<Posjeta>() {
-        @Override
-        public int compare(Posjeta o1, Posjeta o2) {
-            return o2.getDatumOdjave().compareTo(o1.getDatumOdjave());
-        }
-    };
-    ;
     private ComparatorChain veza;
     private Korisnik izabraniKorisnik;
 
@@ -71,8 +46,8 @@ public class PosjetaProzor extends javax.swing.JFrame {
         sdf = new SimpleDateFormat("yyyy-MM-dd");
         lstPosjete.setCellRenderer(new PrikazPosjeta());
         veza = new ComparatorChain();
-        veza.addComparator(compDatumPrijave);
-        veza.addComparator(compDatumOdjave);
+        veza.addComparator(new DatumPrijaveComparator());
+        veza.addComparator(new DatumOdjaveComparator());
         ucitaj();
         ucitajUsluge();
     }
@@ -121,6 +96,7 @@ public class PosjetaProzor extends javax.swing.JFrame {
         btnUkloni = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         lstPosjete.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {

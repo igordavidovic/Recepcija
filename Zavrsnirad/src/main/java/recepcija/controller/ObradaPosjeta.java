@@ -4,7 +4,9 @@
  */
 package recepcija.controller;
 
+import java.util.Date;
 import java.util.List;
+import javax.persistence.TemporalType;
 import recepcija.model.Posjeta;
 import recepcija.util.ZavrsniException;
 
@@ -25,6 +27,18 @@ public class ObradaPosjeta extends Obrada<Posjeta> {
                 + " like :uvjet order by p.datumPrijave, p.datumOdjave").setParameter("uvjet", "%" + uvjet + "%").list();
     }
 
+    public List<Posjeta> readPrijava(Date uvjet) {
+        return session.createQuery("from Posjeta p "
+                + " where p.datumPrijave "
+                + " = :uvjet").setParameter("uvjet", uvjet, TemporalType.DATE).list();
+    }
+    
+    public List<Posjeta> readOdjava(Date uvjet) {
+        return session.createQuery("from Posjeta p "
+                + " where p.datumOdjave "
+                + " = :uvjet").setParameter("uvjet", uvjet, TemporalType.DATE).list();
+    }
+    
     @Override
     protected void kontrolaCreate() throws ZavrsniException {
         kontrolaKorisnik();

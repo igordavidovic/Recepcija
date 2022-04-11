@@ -9,16 +9,10 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.List;
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import recepcija.controller.ObradaDjelatnik;
 import recepcija.controller.ObradaUsluga;
-import recepcija.model.Djelatnik;
 import recepcija.model.Usluga;
-import recepcija.model.Posjeta;
 import recepcija.util.ZavrsniException;
 import recepcija.util.ZavrsniUtil;
 
@@ -61,6 +55,7 @@ public class UslugaProzor extends javax.swing.JFrame {
         txtCijena = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         lstUsluge.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {

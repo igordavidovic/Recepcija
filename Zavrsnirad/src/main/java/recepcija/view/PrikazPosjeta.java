@@ -8,13 +8,11 @@ import java.awt.Component;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Locale;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
-import org.apache.commons.validator.GenericValidator;
 import recepcija.model.Posjeta;
 
 /**
@@ -27,7 +25,7 @@ public class PrikazPosjeta extends JLabel implements ListCellRenderer<Posjeta> {
 
     private SimpleDateFormat noviFormat = new SimpleDateFormat("dd.MM.yyyy");
 
-    private SimpleDateFormat defaultFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+    private SimpleDateFormat defaultFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy",Locale.ENGLISH);
 
     private DefaultListCellRenderer defaultRenderer = new DefaultListCellRenderer();
 
