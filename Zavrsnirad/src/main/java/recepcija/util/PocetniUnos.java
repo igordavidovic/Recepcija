@@ -32,7 +32,7 @@ public class PocetniUnos {
         session.beginTransaction();
         LocalDate datumRodenjaPocetak = LocalDate.of(1970, Month.JANUARY, 1);
         LocalDate datumRodenjaKraj = LocalDate.of(2020, Month.DECEMBER, 31);
-        LocalDate datumPrijavePocetak = LocalDate.of(2019, Month.JANUARY, 1);
+        LocalDate datumPrijavePocetak = LocalDate.of(2022, Month.JANUARY, 1);
         LocalDate datumPrijaveKraj = LocalDate.now();
         Faker faker = new Faker();
         Argon2 argon2 = Argon2Factory.create();
