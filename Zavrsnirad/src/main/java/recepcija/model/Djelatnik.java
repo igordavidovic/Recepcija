@@ -19,13 +19,13 @@ import javax.persistence.OneToMany;
  */
 @Entity
 public class Djelatnik extends Entitet{
-    @Column(columnDefinition = "varchar(50)",nullable = false)
+    @Column(columnDefinition = "varchar(100)",nullable = false)
     private String ime;
-    @Column(columnDefinition = "varchar(50)", nullable = false)
+    @Column(columnDefinition = "varchar(100)", nullable = false)
     private String prezime;
-    @Column(columnDefinition = "varchar(50)",nullable = true)
+    @Column(columnDefinition = "varchar(100)",nullable = true)
     private String uloga;
-    @Column(columnDefinition = "varchar(50)", nullable = true)
+    @Column(columnDefinition = "varchar(100)", nullable = false)
     private String email;
     @Column(columnDefinition = "decimal(18,2)", nullable = true)
     private BigDecimal placa;
