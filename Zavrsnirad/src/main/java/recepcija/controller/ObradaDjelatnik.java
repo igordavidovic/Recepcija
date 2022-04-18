@@ -33,7 +33,7 @@ public class ObradaDjelatnik extends Obrada<Djelatnik> {
         kontrolaUloga();
         kontrolaNoviEmail();
         kontrolaPlaca();
-        kontrolaLozinka();
+        //kontrolaLozinka();
     }
 
     @Override
@@ -118,14 +118,14 @@ public class ObradaDjelatnik extends Obrada<Djelatnik> {
         }
     }
 
-    private void kontrolaLozinka() throws ZavrsniException {
+  /*  private void kontrolaLozinka() throws ZavrsniException {
         if (entitet.getLozinka() == null) {
             throw new ZavrsniException("Lozinka mora biti upisana");
         }
         if (entitet.getLozinka().length() > 100) {
             throw new ZavrsniException("Lozinka ne smije biti duža od 25 znakova");
         }
-    }
+    }*/
 
     public Djelatnik autoriziraj(String email, String lozinka) {
         Djelatnik djelatnik = null;
