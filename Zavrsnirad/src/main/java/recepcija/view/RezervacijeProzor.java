@@ -36,7 +36,7 @@ public class RezervacijeProzor extends javax.swing.JFrame {
         setTitle(ZavrsniUtil.getNaslov("Rezervacije"));
         op = new ObradaPosjeta();
         c = Calendar.getInstance();
-        dpDatumRezervacije.setDate(LocalDate.now().minusDays(1));
+        dpDatumRezervacije.setDate(LocalDate.now());
         btnTrazi.doClick();
     }
 

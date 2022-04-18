@@ -98,6 +98,7 @@ public class PosjetaProzor extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
+        lstPosjete.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         lstPosjete.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 lstPosjeteValueChanged(evt);
@@ -514,19 +515,30 @@ public class PosjetaProzor extends javax.swing.JFrame {
 
     private void vrijednosti() {
         var p = op.getEntitet();
-        p.setDatumPrijave(Date.from(dpDatumPrijave.getDate().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
-        p.setDatumOdjave(Date.from(dpDatumOdjave.getDate().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+        try {
+            p.setDatumPrijave(Date.from(dpDatumPrijave.getDate().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+        } catch (Exception e) {
+            p.setDatumPrijave(null);
+        }
+        try {
+            p.setDatumOdjave(Date.from(dpDatumOdjave.getDate().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+        } catch (Exception e) {
+            p.setDatumOdjave(null);
+        }
         try {
             p.setBrojSoba(Integer.parseInt(txtBrojSoba.getText()));
         } catch (Exception e) {
+            p.setBrojSoba(null);
         }
         try {
             p.setBrojOdraslih(Integer.parseInt(txtBrojOdraslih.getText()));
         } catch (Exception e) {
+            p.setBrojOdraslih(null);
         }
         try {
             p.setBrojDjece(Integer.parseInt(txtBrojDjece.getText()));
         } catch (Exception e) {
+            p.setBrojDjece(null);
         }
         p.setKorisnik(izabraniKorisnik);
     }

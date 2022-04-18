@@ -6,6 +6,7 @@ package recepcija.controller;
 
 import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
+import java.math.BigDecimal;
 import java.util.List;
 import javax.persistence.NoResultException;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -30,7 +31,8 @@ public class ObradaDjelatnik extends Obrada<Djelatnik> {
         kontrolaIme();
         kontrolaPrezime();
         kontrolaUloga();
-        kontrolaEmail();
+        kontrolaNoviEmail();
+        kontrolaPlaca();
         kontrolaLozinka();
     }
 
@@ -39,7 +41,8 @@ public class ObradaDjelatnik extends Obrada<Djelatnik> {
         kontrolaIme();
         kontrolaPrezime();
         kontrolaUloga();
-        kontrolaEmail();
+        kontrolaPromjenaEmail();
+        kontrolaPlaca();
     }
 
     @Override
@@ -51,8 +54,8 @@ public class ObradaDjelatnik extends Obrada<Djelatnik> {
         if (entitet.getIme() == null || entitet.getIme().trim().isEmpty()) {
             throw new ZavrsniException("Ime mora biti uneseno");
         }
-        if (entitet.getIme().length() > 50) {
-            throw new ZavrsniException("Ime ne smije sadržavati više od 50 znakova");
+        if (entitet.getIme().length() > 100) {
+            throw new ZavrsniException("Ime ne smije sadržavati više od 100 znakova");
         }
         boolean b = ZavrsniUtil.provjeraZnakova(entitet.getIme());
         if (b == false) {
@@ -65,8 +68,8 @@ public class ObradaDjelatnik extends Obrada<Djelatnik> {
         if (entitet.getPrezime() == null || entitet.getPrezime().trim().isEmpty()) {
             throw new ZavrsniException("Prezime mora biti uneseno");
         }
-        if (entitet.getPrezime().length() > 50) {
-            throw new ZavrsniException("Prezime ne smije sadržavati više od 50 znakova");
+        if (entitet.getPrezime().length() > 100) {
+            throw new ZavrsniException("Prezime ne smije sadržavati više od 100 znakova");
         }
         boolean b = ZavrsniUtil.provjeraZnakova(entitet.getPrezime());
         if (b == false) {
@@ -83,18 +86,47 @@ public class ObradaDjelatnik extends Obrada<Djelatnik> {
     }
 
     private void kontrolaEmail() throws ZavrsniException {
+        if (entitet.getEmail().length() > 100) {
+            throw new ZavrsniException("Email ne smije biti duži od 100 znakova");
+        }
         boolean b = EmailValidator.getInstance().isValid(entitet.getEmail());
         if (b == false) {
             throw new ZavrsniException("Email nije formalno ispravan");
         }
     }
-    private void kontrolaLozinka() throws ZavrsniException{
-        if(entitet.getLozinka().length() > 25 ){
+
+    private void kontrolaNoviEmail() throws ZavrsniException {
+        kontrolaEmail();
+        List<Djelatnik> lista = session.createQuery("from Djelatnik e "
+                + "where e.email=:email")
+                .setParameter("email", entitet.getEmail()).list();
+
+        if (lista != null && lista.size() > 0) {
+            throw new ZavrsniException("Email postoji u sustavu, dodijeljen " + lista.get(0).getPrezime());
+        }
+    }
+
+    private void kontrolaPromjenaEmail() throws ZavrsniException {
+        kontrolaEmail();
+        List<Djelatnik> lista = session.createQuery("from Djelatnik e "
+                + "where e.email=:email and e.sifra!=:id")
+                .setParameter("email", entitet.getEmail())
+                .setParameter("id", entitet.getSifra()).list();
+
+        if (lista != null && lista.size() > 0) {
+            throw new ZavrsniException("Email postoji u sustavu, dodijeljen " + lista.get(0).getPrezime());
+        }
+    }
+
+    private void kontrolaLozinka() throws ZavrsniException {
+        if (entitet.getLozinka() == null) {
+            throw new ZavrsniException("Lozinka mora biti upisana");
+        }
+        if (entitet.getLozinka().length() > 100) {
             throw new ZavrsniException("Lozinka ne smije biti duža od 25 znakova");
         }
-        Argon2 argon2 = Argon2Factory.create();
-        entitet.setLozinka(argon2.hash(10, 65536, 1,entitet.getLozinka().toCharArray()));
     }
+
     public Djelatnik autoriziraj(String email, String lozinka) {
         Djelatnik djelatnik = null;
         try {
@@ -105,9 +137,15 @@ public class ObradaDjelatnik extends Obrada<Djelatnik> {
         if (djelatnik == null) {
             return null;
         }
-        
+
         Argon2 argon2 = Argon2Factory.create();
-        
+
         return argon2.verify(djelatnik.getLozinka(), lozinka.toCharArray()) ? djelatnik : null;
+    }
+
+    private void kontrolaPlaca() throws ZavrsniException {
+        if (entitet.getPlaca().equals(BigDecimal.ZERO)) {
+            throw new ZavrsniException("Plaća nije ispravno unesena");
+        }
     }
 }

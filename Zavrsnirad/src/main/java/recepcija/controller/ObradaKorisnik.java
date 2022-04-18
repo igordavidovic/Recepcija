@@ -64,7 +64,7 @@ public class ObradaKorisnik extends Obrada<Korisnik> {
     protected void kontrolaCreate() throws ZavrsniException {
         kontrolaIme();
         kontrolaPrezime();
-        kontrolaOib();
+        kontrolaNoviOib();
         kontrolaEmail();
     }
 
@@ -72,7 +72,7 @@ public class ObradaKorisnik extends Obrada<Korisnik> {
     protected void kontrolaUpdate() throws ZavrsniException {
         kontrolaIme();
         kontrolaPrezime();
-        kontrolaOib();
+        kontrolaPromjenaOib();
         kontrolaEmail();
     }
 
@@ -96,8 +96,8 @@ public class ObradaKorisnik extends Obrada<Korisnik> {
         if (entitet.getIme() == null || entitet.getIme().trim().isEmpty()) {
             throw new ZavrsniException("Ime mora biti uneseno");
         }
-        if (entitet.getIme().length() > 50) {
-            throw new ZavrsniException("Ime ne smije sadržavati više od 50 znakova");
+        if (entitet.getIme().length() > 100) {
+            throw new ZavrsniException("Ime ne smije sadržavati više od 100 znakova");
         }
         boolean b = ZavrsniUtil.provjeraZnakova(entitet.getIme());
         if (b == false) {
@@ -110,8 +110,8 @@ public class ObradaKorisnik extends Obrada<Korisnik> {
         if (entitet.getPrezime() == null || entitet.getPrezime().trim().isEmpty()) {
             throw new ZavrsniException("Prezime mora biti uneseno");
         }
-        if (entitet.getPrezime().length() > 50) {
-            throw new ZavrsniException("Prezime ne smije sadržavati više od 50 znakova");
+        if (entitet.getPrezime().length() > 100) {
+            throw new ZavrsniException("Prezime ne smije sadržavati više od 100 znakova");
         }
         boolean b = ZavrsniUtil.provjeraZnakova(entitet.getPrezime());
         if (b == false) {
@@ -129,9 +129,36 @@ public class ObradaKorisnik extends Obrada<Korisnik> {
     }
 
     private void kontrolaEmail() throws ZavrsniException {
+        if (entitet.getEmail().length() > 100) {
+            throw new ZavrsniException("Email ne smije biti duži od 100 znakova");
+        }
         boolean b = EmailValidator.getInstance().isValid(entitet.getEmail());
         if (b == false) {
             throw new ZavrsniException("Email nije formalno ispravan");
         }
     }
+
+    private void kontrolaNoviOib() throws ZavrsniException {
+        kontrolaOib();
+        List<Korisnik> lista = session.createQuery("from Korisnik e "
+                + "where e.oib=:oib")
+                .setParameter("oib", entitet.getOib()).list();
+
+        if (lista != null && lista.size() > 0) {
+            throw new ZavrsniException("OIB postoji u sustavu, dodijeljen " + lista.get(0).getPrezime());
+        }
+    }
+
+    private void kontrolaPromjenaOib() throws ZavrsniException {
+        kontrolaOib();
+        List<Korisnik> lista = session.createQuery("from Korisnik e "
+                + "where e.oib=:oib and e.sifra!=:id")
+                .setParameter("oib", entitet.getOib())
+                .setParameter("id", entitet.getSifra()).list();
+
+        if (lista != null && lista.size() > 0) {
+            throw new ZavrsniException("OIB postoji u sustavu, dodijeljen " + lista.get(0).getPrezime());
+        }
+    }
+
 }

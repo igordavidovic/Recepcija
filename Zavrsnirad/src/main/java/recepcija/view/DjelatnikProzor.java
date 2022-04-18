@@ -29,6 +29,7 @@ public class DjelatnikProzor extends javax.swing.JFrame {
     private DecimalFormat df;
     private JPasswordField pf;
     private Argon2 argon2;
+
     /**
      * Creates new form DjelatnikProzor
      */
@@ -197,11 +198,11 @@ public class DjelatnikProzor extends javax.swing.JFrame {
             return;
         }
         if (ok == JOptionPane.OK_OPTION) {
-            if (pf.getPassword() == null || pf.getPassword().length == 0) {
-                JOptionPane.showMessageDialog(getRootPane(), "Lozinka ne može biti prazna");
+            if (pf.getPassword() == null || pf.getPassword().length == 0 || pf.getPassword().length >= 12) {
+                JOptionPane.showMessageDialog(getRootPane(), "Lozinka ne može biti prazna ili duža od 12 znakova");
                 return;
             }
-            od.getEntitet().setLozinka(pf.getPassword().toString());
+            od.getEntitet().setLozinka(argon2.hash(10, 65536, 1, pf.getPassword()));
         }
         pf.setText("");
         try {
@@ -229,11 +230,10 @@ public class DjelatnikProzor extends javax.swing.JFrame {
                 return;
             }
             if (!argon2.verify(od.getEntitet().getLozinka(), pf.getPassword())) {
-                JOptionPane.showMessageDialog(getRootPane(), "Lozinka koju ste unijeli ne odgovara lozinci djelatnika");
                 pf.setText("");
+                JOptionPane.showMessageDialog(getRootPane(), "Lozinka koju ste unijeli ne odgovara lozinci djelatnika");
                 return;
             }
-
         }
         pf.setText("");
         try {
@@ -249,12 +249,24 @@ public class DjelatnikProzor extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(getRootPane(), "Prvo odaberite stavku");
             return;
         }
-        if (JOptionPane.showConfirmDialog(getRootPane(),
-                "Sigurno bristati \"" + od.getEntitet().getIme() + " " + od.getEntitet().getPrezime() + "\"?", "Brisanje",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE) == JOptionPane.NO_OPTION) {
+        int ok = (JOptionPane.showConfirmDialog(getRootPane(), pf, "Upišite lozinku djelatnika", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE));
+        if (ok == JOptionPane.CANCEL_OPTION) {
+            pf.setText("");
             return;
         }
+        if (ok == JOptionPane.OK_OPTION) {
+            if (pf.getPassword() == null || pf.getPassword().length == 0) {
+                JOptionPane.showMessageDialog(getRootPane(), "Lozinka ne može biti prazna");
+                return;
+            }
+            if (!argon2.verify(od.getEntitet().getLozinka(), pf.getPassword())) {
+                JOptionPane.showMessageDialog(getRootPane(), "Lozinka koju ste unijeli ne odgovara lozinci djelatnika");
+                pf.setText("");
+
+                return;
+            }
+        }
+        pf.setText("");
         try {
             od.delete();
             ucitaj();

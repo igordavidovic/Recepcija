@@ -32,17 +32,19 @@ public class ObradaPosjeta extends Obrada<Posjeta> {
                 + " where p.datumPrijave "
                 + " = :uvjet").setParameter("uvjet", uvjet, TemporalType.DATE).list();
     }
-    
+
     public List<Posjeta> readOdjava(Date uvjet) {
         return session.createQuery("from Posjeta p "
                 + " where p.datumOdjave "
                 + " = :uvjet").setParameter("uvjet", uvjet, TemporalType.DATE).list();
     }
-    
+
     @Override
     protected void kontrolaCreate() throws ZavrsniException {
         kontrolaKorisnik();
         kontrolaBrojSoba();
+        kontrolaDatumPrijave();
+        kontrolaDatumOdjave();
         kontrolaBrojOdraslih();
         kontrolaBrojDjece();
         kontrolaUsluga();
@@ -52,6 +54,8 @@ public class ObradaPosjeta extends Obrada<Posjeta> {
     protected void kontrolaUpdate() throws ZavrsniException {
         kontrolaKorisnik();
         kontrolaBrojSoba();
+        kontrolaDatumPrijave();
+        kontrolaDatumOdjave();
         kontrolaBrojOdraslih();
         kontrolaBrojDjece();
         kontrolaUsluga();
@@ -97,6 +101,37 @@ public class ObradaPosjeta extends Obrada<Posjeta> {
     private void kontrolaUsluga() throws ZavrsniException {
         if (entitet.getUsluge() == null || entitet.getUsluge().isEmpty()) {
             throw new ZavrsniException("Posjeta mora sadržati usluge");
+        }
+    }
+
+    private void kontrolaDatumPrijave() throws ZavrsniException {
+        if (entitet.getDatumPrijave() == null) {
+            throw new ZavrsniException("Datum prijave mora biti izabran");
+        }
+    }
+
+    /*private void kontrolaNoviDatumPrijave() throws ZavrsniException {
+        if (entitet.getDatumPrijave() == null) {
+            throw new ZavrsniException("Datum prijave mora biti izabran");
+        }
+        int broj = 0;
+        int provjera;
+        List<Posjeta> posjete = session.createQuery("from Posjeta").list();
+        for (Posjeta p : posjete) {
+            provjera = p.getDatumPrijave().compareTo(entitet.getDatumPrijave());
+            if (provjera != 0) {
+                continue;
+            }
+            broj++;
+        }
+        if (broj >= 20) {
+            throw new ZavrsniException("Nije moguće napraviti rezervaciju za odabrani dan");
+        }
+    }*/
+
+    private void kontrolaDatumOdjave() throws ZavrsniException {
+        if (entitet.getDatumOdjave() == null) {
+            throw new ZavrsniException("Datum odjave mora biti izabran");
         }
     }
 }
