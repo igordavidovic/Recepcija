@@ -214,7 +214,7 @@ public class DjelatnikProzor extends javax.swing.JFrame {
     }//GEN-LAST:event_btnKreirajActionPerformed
 
     private void btnPromjeniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPromjeniActionPerformed
-        if (od.getEntitet() == null) {
+        if (od.getEntitet() == null || lstDjelatnici.getSelectedValue() == null) {
             JOptionPane.showMessageDialog(getRootPane(), "Prvo odaberite stavku");
             return;
         }
@@ -245,7 +245,7 @@ public class DjelatnikProzor extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPromjeniActionPerformed
 
     private void btnObrisiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiActionPerformed
-        if (od.getEntitet() == null) {
+        if (od.getEntitet() == null || lstDjelatnici.getSelectedValue() == null) {
             JOptionPane.showMessageDialog(getRootPane(), "Prvo odaberite stavku");
             return;
         }

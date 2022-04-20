@@ -90,11 +90,10 @@ public class ObradaPosjeta extends Obrada<Posjeta> {
     }
 
     private void kontrolaBrojDjece() throws ZavrsniException {
-        if (entitet.getBrojDjece() == null) {
-            throw new ZavrsniException("Broj djece mora biti unesen");
-        }
-        if (entitet.getBrojDjece() > 20 || entitet.getBrojSoba() < 0) {
-            throw new ZavrsniException("Broj djece može biti između 0 i 20");
+        if (entitet.getBrojDjece() != null) {
+            if (entitet.getBrojDjece() > 20 || entitet.getBrojDjece() < 0) {
+                throw new ZavrsniException("Broj djece može biti između 0 i 20");
+            }
         }
     }
 
@@ -128,7 +127,6 @@ public class ObradaPosjeta extends Obrada<Posjeta> {
             throw new ZavrsniException("Nije moguće napraviti rezervaciju za odabrani dan");
         }
     }*/
-
     private void kontrolaDatumOdjave() throws ZavrsniException {
         if (entitet.getDatumOdjave() == null) {
             throw new ZavrsniException("Datum odjave mora biti izabran");

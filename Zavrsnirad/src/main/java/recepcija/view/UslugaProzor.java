@@ -21,8 +21,10 @@ import recepcija.util.ZavrsniUtil;
  * @author Igor
  */
 public class UslugaProzor extends javax.swing.JFrame {
+
     private ObradaUsluga ou;
     private DecimalFormat df;
+
     /**
      * Creates new form DjelatnikProzor
      */
@@ -30,8 +32,8 @@ public class UslugaProzor extends javax.swing.JFrame {
         initComponents();
         ou = new ObradaUsluga();
         setTitle(ZavrsniUtil.getNaslov("Usluge"));
-        DecimalFormatSymbols symbols = new DecimalFormatSymbols(new Locale("hr","HR"));
-        df = new DecimalFormat("###,###.00",symbols);
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(new Locale("hr", "HR"));
+        df = new DecimalFormat("###,###.00", symbols);
         ucitaj();
     }
 
@@ -152,7 +154,7 @@ public class UslugaProzor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lstUslugeValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstUslugeValueChanged
-       if (evt.getValueIsAdjusting() || lstUsluge.getSelectedValue() == null) {
+        if (evt.getValueIsAdjusting() || lstUsluge.getSelectedValue() == null) {
             return;
         }
         ou.setEntitet(lstUsluge.getSelectedValue());
@@ -173,7 +175,7 @@ public class UslugaProzor extends javax.swing.JFrame {
     }//GEN-LAST:event_btnKreirajActionPerformed
 
     private void btnPromjeniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPromjeniActionPerformed
-        if (ou.getEntitet() == null) {
+        if (ou.getEntitet() == null || lstUsluge.getSelectedValue() == null) {
             JOptionPane.showMessageDialog(getRootPane(), "Prvo odaberite stavku");
             return;
         }
@@ -188,15 +190,15 @@ public class UslugaProzor extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPromjeniActionPerformed
 
     private void btnObrisiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiActionPerformed
-        if (ou.getEntitet() == null) {
+        if (ou.getEntitet() == null || lstUsluge.getSelectedValue() == null) {
             JOptionPane.showMessageDialog(getRootPane(), "Prvo odaberite stavku");
             return;
         }
-        if(JOptionPane.showConfirmDialog(getRootPane(), 
+        if (JOptionPane.showConfirmDialog(getRootPane(),
                 "Sigurno bristati \"" + ou.getEntitet().getNaziv() + "\"?", "Brisanje",
-                JOptionPane.YES_NO_OPTION, 
-                JOptionPane.QUESTION_MESSAGE) == JOptionPane.NO_OPTION){
-                return;
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE) == JOptionPane.NO_OPTION) {
+            return;
         }
         try {
             ou.delete();
@@ -228,8 +230,9 @@ public class UslugaProzor extends javax.swing.JFrame {
         for (Usluga u : usluge) {
             m.addElement(u);
         }
-        lstUsluge.setModel(m);    }
-    
+        lstUsluge.setModel(m);
+    }
+
     private void vrijednosti() {
         var s = ou.getEntitet();
         s.setNaziv(txtNaziv.getText());

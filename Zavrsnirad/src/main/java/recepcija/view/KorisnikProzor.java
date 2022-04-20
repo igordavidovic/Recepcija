@@ -279,7 +279,7 @@ public class KorisnikProzor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPromjeniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPromjeniActionPerformed
-        if (ok.getEntitet() == null) {
+        if (ok.getEntitet() == null || lstKorisnici.getSelectedValue() == null) {
             JOptionPane.showMessageDialog(getRootPane(), "Prvo odaberite stavku");
             return;
         }
@@ -322,7 +322,7 @@ public class KorisnikProzor extends javax.swing.JFrame {
     }//GEN-LAST:event_btnKreirajActionPerformed
 
     private void btnObrisiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiActionPerformed
-        if (ok.getEntitet() == null) {
+        if (ok.getEntitet() == null || lstKorisnici.getSelectedValue() == null) {
             JOptionPane.showMessageDialog(getRootPane(), "Prvo odaberite stavku");
             return;
         }

@@ -66,6 +66,7 @@ public class ObradaKorisnik extends Obrada<Korisnik> {
         kontrolaPrezime();
         kontrolaNoviOib();
         kontrolaEmail();
+        //kontrolaDatumRodenja();
     }
 
     @Override
@@ -74,20 +75,12 @@ public class ObradaKorisnik extends Obrada<Korisnik> {
         kontrolaPrezime();
         kontrolaPromjenaOib();
         kontrolaEmail();
+        //kontrolaDatumRodenja();
     }
 
     @Override
     protected void kontrolaDelete() throws ZavrsniException {
         if (entitet.getPosjete() != null && entitet.getPosjete().size() > 0) {
-            StringBuilder sb = new StringBuilder();
-            sb.append("\n");
-            for (Posjeta p : entitet.getPosjete()) {
-                sb.append(p.getKorisnik().getIme());
-                sb.append(" ");
-                sb.append(p.getKorisnik().getPrezime());
-                sb.append("\n");
-            }
-
             throw new ZavrsniException("Ne možete brisati korisnika jer se on nalazi na posjeti");
         }
     }
@@ -158,6 +151,12 @@ public class ObradaKorisnik extends Obrada<Korisnik> {
 
         if (lista != null && lista.size() > 0) {
             throw new ZavrsniException("OIB postoji u sustavu, dodijeljen " + lista.get(0).getPrezime());
+        }
+    }
+
+    private void kontrolaDatumRodenja() throws ZavrsniException {
+        if (entitet.getDatumRodenja() == null) {
+            throw new ZavrsniException("Datum rođenja mora biti izabran");
         }
     }
 

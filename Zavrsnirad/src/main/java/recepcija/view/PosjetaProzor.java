@@ -27,7 +27,7 @@ import recepcija.util.ZavrsniUtil;
  * @author Igor
  */
 public class PosjetaProzor extends javax.swing.JFrame {
-
+    
     private ObradaPosjeta op;
     private ObradaKorisnik ok;
     private Date datum;
@@ -340,12 +340,16 @@ public class PosjetaProzor extends javax.swing.JFrame {
         }
         txtBrojSoba.setText(p.getBrojSoba().toString());
         txtBrojOdraslih.setText(p.getBrojOdraslih().toString());
-        txtBrojDjece.setText(p.getBrojDjece().toString());
-
+        if (p.getBrojDjece() != null) {
+            txtBrojDjece.setText(p.getBrojDjece().toString());
+        } else {
+            txtBrojDjece.setText("0");
+        }
+        
         DefaultListModel<Usluga> m = new DefaultListModel<>();
         m.addAll(p.getUsluge());
         lstUslugeNaPosjeti.setModel(m);
-
+        
         lblKorisnik.setText(p.getKorisnik().getIme() + " " + p.getKorisnik().getPrezime());
         izabraniKorisnik = p.getKorisnik();
     }//GEN-LAST:event_lstPosjeteValueChanged
@@ -364,12 +368,12 @@ public class PosjetaProzor extends javax.swing.JFrame {
     }//GEN-LAST:event_btnKreirajActionPerformed
 
     private void btnPromjeniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPromjeniActionPerformed
-        if (op.getEntitet() == null) {
+        if (op.getEntitet() == null || lstPosjete.getSelectedValue() == null) {
             JOptionPane.showMessageDialog(getRootPane(), "Prvo odaberite stavku");
             return;
         }
         vrijednosti();
-
+        
         try {
             op.update();
             ucitaj();
@@ -379,7 +383,7 @@ public class PosjetaProzor extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPromjeniActionPerformed
 
     private void btnObrisiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiActionPerformed
-        if (op.getEntitet() == null) {
+        if (op.getEntitet() == null || lstPosjete.getSelectedValue() == null) {
             JOptionPane.showMessageDialog(getRootPane(), "Prvo odaberite stavku");
             return;
         }
@@ -421,8 +425,12 @@ public class PosjetaProzor extends javax.swing.JFrame {
     }//GEN-LAST:event_lstSviKorisniciValueChanged
 
     private void btnDodajUsluguActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDodajUsluguActionPerformed
+        if (lstSveUsluge.getSelectedValue() == null) {
+            JOptionPane.showMessageDialog(getRootPane(), "Morate izabrati uslugu/e za dodati");
+            return;
+        }
         DefaultListModel<Usluga> m;
-
+        
         if (op.getEntitet() != null) {
             m = (DefaultListModel<Usluga>) lstUslugeNaPosjeti.getModel();
         } else {
@@ -443,6 +451,10 @@ public class PosjetaProzor extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDodajUsluguActionPerformed
 
     private void btnUkloniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUkloniActionPerformed
+        if (lstUslugeNaPosjeti.getSelectedValue() == null) {
+            JOptionPane.showMessageDialog(getRootPane(), "Morate izabrati uslugu/e za brisati");
+            return;
+        }
         DefaultListModel<Usluga> m = (DefaultListModel<Usluga>) lstUslugeNaPosjeti.getModel();
         for (Usluga u : lstUslugeNaPosjeti.getSelectedValuesList()) {
             m.removeElement(u);
@@ -512,7 +524,7 @@ public class PosjetaProzor extends javax.swing.JFrame {
         }
         lstPosjete.setModel(m);
     }
-
+    
     private void vrijednosti() {
         var p = op.getEntitet();
         try {
@@ -538,11 +550,11 @@ public class PosjetaProzor extends javax.swing.JFrame {
         try {
             p.setBrojDjece(Integer.parseInt(txtBrojDjece.getText()));
         } catch (Exception e) {
-            p.setBrojDjece(null);
+            p.setBrojDjece(0);
         }
         p.setKorisnik(izabraniKorisnik);
     }
-
+    
     private void ucitajPosjeteDatum() {
         DefaultListModel<Posjeta> m = new DefaultListModel<>();
         String uvjet = sdf.format(datum);
@@ -552,7 +564,7 @@ public class PosjetaProzor extends javax.swing.JFrame {
         }
         lstPosjete.setModel(m);
     }
-
+    
     private void ucitajUsluge() {
         DefaultListModel<Usluga> m = new DefaultListModel<>();
         List<Usluga> usluge = new ObradaUsluga().read();

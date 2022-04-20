@@ -48,7 +48,7 @@ public class Autorizacija extends javax.swing.JFrame {
         txtLozinka = new javax.swing.JPasswordField();
         btnPrijava = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel1.setText("Email");
